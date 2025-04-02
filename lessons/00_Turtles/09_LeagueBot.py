@@ -28,8 +28,15 @@ def set_turtle_image(turtle, image_name):
     turtle.shape(image_path)
 
 set_turtle_image(t, "leaguebot_bolt.gif")
-t.turtlesize(10,10)
 t.pencolor('blue')
 
+t.turtlesize(stretch_wid=10, stretch_len=10, outline=4)
+Sides = 400
+distance = 2
+angle = 360/Sides
+
+for i in range(Sides):
+    t.forward(distance)
+    t.left(angle)
 
 turtle.exitonclick()
