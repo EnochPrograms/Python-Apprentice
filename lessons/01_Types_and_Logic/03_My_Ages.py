@@ -26,7 +26,7 @@ elif age >= 20 and age <= 64:
 elif age >= 65 and age <= 105:
     message = "You are a senior."
 else:
-    message = "liar!"
+    message = "go die in a hole you bag of bones"
 
 # Show the message to the user
 messagebox.showinfo("What you are", message)
