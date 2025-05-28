@@ -38,3 +38,29 @@ you can ask for a string with simpledialog.askstring().
 # If the user enters an unknown operation, display an error message. ( use messagebox.showerror()
 
 # Keep the window open
+
+import tkinter as tk
+from tkinter import simpledialog, messagebox
+
+# Create a window object
+window = tk.Tk()
+window.withdraw()
+
+Number1 = simpledialog.askinteger("First Number", "Enter the first number.")
+Number2 = simpledialog.askinteger("Second Number", "Enter the second number.")
+OperatorUsed = simpledialog.askstring("What would you like to do with these numbers?", "+, -, /, *?")
+
+
+
+if OperatorUsed == "+":
+    messagebox.showinfo (str(Number1 + Number2))
+
+elif OperatorUsed == "-":
+    messagebox.showinfo (str(Number1 - Number2))
+
+elif OperatorUsed == "*":
+    messagebox.showinfo(str (Number1 * Number2))
+
+elif OperatorUsed == "/":
+    messagebox.showinfo(str (Number1 / Number2))
+

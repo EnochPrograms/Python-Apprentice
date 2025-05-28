@@ -1,52 +1,65 @@
-"""Penta Spiral
+import pygame
+import sys
 
-This program already works. See if you can change it to make it draw a different pattern.
+# Initialize
+pygame.init()
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Mini Platformer")
+clock = pygame.time.Clock()
 
-"""
+# Colors
+WHITE = (255, 255, 255)
+BLUE = (0, 150, 255)
+GREEN = (0, 255, 100)
 
+# Player settings
+player = pygame.Rect(100, 500, 50, 50)
+player_speed = 5
+gravity = 0.5
+jump_strength = -10
+velocity_y = 0
+on_ground = False
 
-import random
-import turtle
+# Platform
+platform = pygame.Rect(0, 550, WIDTH, 50)
 
+# Game loop
+while True:
+    screen.fill(WHITE)
 
-# Returns a random color!
-def getRandomColor():
-    return "#%06X" % (random.randint(0, 0xFFFFFF))
+    # Event check
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
+    # Key input
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        player.x -= player_speed
+    if keys[pygame.K_RIGHT]:
+        player.x += player_speed
+    if keys[pygame.K_UP] and on_ground:
+        velocity_y = jump_strength
+        on_ground = False
 
-window = turtle.Screen()
-window.bgcolor("white")
+    # Apply gravity
+    velocity_y += gravity
+    player.y += velocity_y
 
-# Make a new turtle
-myTurtle = turtle.Turtle()
+    # Collision with platform
+    if player.colliderect(platform):
+        player.bottom = platform.top
+        velocity_y = 0
+        on_ground = True
+    else:
+        on_ground = False
 
-# This code sets our shape to a turtle
-myTurtle.shape("turtle")
+    # Draw everything
+    pygame.draw.rect(screen, BLUE, player)
+    pygame.draw.rect(screen, GREEN, platform)
 
-# Set your turtle's speed
-myTurtle.speed(0)
-
-# Set your turtle's color
-myTurtle.color("green")
-
-# Use a loop to repeat the code below 50 times
-for i in range(1000):
-
-    # Set the turtle color to a random color
-    myTurtle.pencolor(getRandomColor())
-
-    # Move the turtle (5*i) pixels. 'i' is the loop variable
-    myTurtle.forward(1 +i)
-
-    # Turn the turtle (360/7) degrees to the right
-    myTurtle.right(360 / 99 + i*1)
-
-    # Change the turtle width to 'i' (the loop variable)
-    myTurtle.width(100)
-
-    # Check the pattern against the picture in the recipe. If it matches, you are done!
-
-
-turtle.done()
-
-# Now check in your code!
+    # Update screen
+    pygame.display.update()
+    clock.tick(60)
